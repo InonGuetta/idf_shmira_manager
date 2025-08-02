@@ -3,8 +3,8 @@ import { role } from "./enum/role.enum";
 
 @Table({ timestamps: false }) 
 export class Users extends Model {
-
-  @Column({
+ @Column
+ ({
     type: DataType.INTEGER,
     primaryKey: true,
     autoIncrement: true,
@@ -13,7 +13,7 @@ export class Users extends Model {
 
   @Column
   user_name: string;
-
+ 
   @Column
   password: string;
 

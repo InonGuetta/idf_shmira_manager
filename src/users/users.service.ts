@@ -12,13 +12,13 @@ export class UsersService {
         private readonly jwtservice: JwtService,
     ) { }
 
-    async signUp(user_name: string, password: string, role:string): Promise<string> {
-
+    async signUp(user_name: string, password: string, role: string): Promise<string> {
         const hash = await bcrypt.hash(password, 10);
-        const user: Users = await this.userModel.create({ user_name, password: hash , role})
+        const user: Users = await this.userModel.create({ user_name, password: hash, role })
         const { user_id } = user
         const token: string = this.jwtservice.sign({ user_id, role })
         return token;
     }
 
+    
 }
