@@ -5,6 +5,8 @@ import { GeneralModule } from './general/general.module';
 import { UsersModule } from './users/users.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Users } from './users/users.entity';
+import { TaskModule } from './task/task.module';
+import { Task } from './task/entities/task.entity';
 
 @Module({
   imports: [
@@ -17,7 +19,7 @@ import { Users } from './users/users.entity';
       username: 'neondb_owner', 
       password: 'npg_4cDxs6eptjym',
       database: 'neondb',
-      models: [Users],
+      models: [Users, Task],
       autoLoadModels: true,
       synchronize: true,
       dialectOptions: {
@@ -27,6 +29,7 @@ import { Users } from './users/users.entity';
         },
       },
     }),
+    TaskModule,
   ],
   controllers: [AppController],
   providers: [AppService],
