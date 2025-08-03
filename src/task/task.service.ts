@@ -6,25 +6,25 @@ import { Task } from './entities/task.entity';
 @Injectable()
 export class TaskService {
 
-  async create(createTaskDto: CreateTaskDto) {
+   create(createTaskDto: CreateTaskDto) {
     const task = new Task()
     task.content = createTaskDto.content
-    return await task.save();
+    return task.save();
   }
 
-  async findAllTask() {
-    return await Task.findAll();
+   findAllTask() {
+    return Task.findAll(); 
   }
 
-  async findOneTask(id: number) {
-    return await Task.findOne({ where: { id } });
+   findOneTask(id: number) {
+    return Task.findOne({ where: { id } });
   }
 
-  async update(id: number, updateTaskDto: UpdateTaskDto) {
-    return await Task.update(updateTaskDto, { where: { id } });
+   update(id: number, updateTaskDto: UpdateTaskDto) {
+    return Task.update(updateTaskDto, { where: { id } });
   }
 
-  async remove(id: number) {
-    return await Task.destroy({ where: { id } });
+   remove(id: number) {
+    return Task.destroy({ where: { id } });
   }
 }
