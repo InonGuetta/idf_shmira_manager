@@ -5,7 +5,7 @@ import { UpdateTaskDto } from './dto/update-task.dto';
 
 @Controller('task')
 export class TaskController {
-  constructor(private readonly taskService: TaskService) {}
+  constructor(private readonly taskService: TaskService) { }
 
   @Post('create')
   create(@Body() createTaskDto: CreateTaskDto) {
@@ -13,18 +13,18 @@ export class TaskController {
   }
 
   @Get()
-  async findAll() {
-    return await this.taskService.findAllTask();
+  findAll() {
+    return this.taskService.findAllTask();
   }
 
   @Get(':id')
-  async findOneTask(@Param('id') id: string) {
-    return await this.taskService.findOneTask(+id);
+  findOneTask(@Param('id') id: string) {
+    return this.taskService.findOneTask(+id);
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
-    return await this.taskService.update(+id, updateTaskDto);
+  update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
+    return this.taskService.update(+id, updateTaskDto);
   }
 
   @Delete(':id')

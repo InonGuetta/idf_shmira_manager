@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { GeneralModule } from './general/general.module';
 import { UsersModule } from './users/users.module';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { Users } from './users/users.entity';
+import { Users } from './users/entities/users.entity';
 import { TaskModule } from './task/task.module';
 import { Task } from './task/entities/task.entity';
 
