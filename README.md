@@ -1,98 +1,141 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+🛡️ Shmira Manager – Mission Management System for Soldiers and Commanders
+📘 Project Description
+Shmira Manager is a mission management system built using NestJS.
+It handles authentication, role-based access control, and task assignment between two user roles: Soldiers and Commanders.
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+🚀 Core Features
+✅ User registration and JWT-based authentication
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+👤 Two roles: soldier and commander
 
-## Description
+🪖 Soldiers can:
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Register themselves
 
-## Project setup
+View only their own assigned missions
 
-```bash
-$ npm install
-```
+🧑‍✈️ Commanders can:
 
-## Compile and run the project
+Register themselves
 
-```bash
-# development
-$ npm run start
+Create missions for soldiers
 
-# watch mode
-$ npm run start:dev
+Edit and delete missions
 
-# production mode
-$ npm run start:prod
-```
+View all missions
 
-## Run tests
+🔒 Route protection with Guards:
 
-```bash
-# unit tests
-$ npm run test
+AuthGuard: Validates JWT token
 
-# e2e tests
-$ npm run test:e2e
+CommanderGuard: Ensures the user is a commander
 
-# test coverage
-$ npm run test:cov
-```
+🗃️ Database Structure
+Users Table:
+Field	Type	Description
+user_id	integer	Unique user ID
+user_name	string	Username
+password	string	Encrypted password (bcrypt)
+role	enum	soldier or commander
 
-## Deployment
+Tasks Table:
+Field	Type	Description
+id	integer	Unique task ID
+content	string	Task content
+startTime	string	Task start time
+endTime	string	Task end time
+userId	integer	ID of the soldier assigned
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+General Table (Relations):
+Field	Type	Description
+id	integer	Unique ID
+startTime	string	Start time
+endTime	string	End time
+userId	integer	Refers to Users table
+taskId	integer	Refers to Tasks table
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+🔐 Permissions Matrix
+Action	Soldier	Commander
+Register	✅	✅
+Authenticate (JWT)	✅	✅
+Create Mission	❌	✅
+Delete Mission	❌	✅
+Edit Mission	❌	✅
+View All Missions	❌	✅
+View Own Missions	✅ (self only)	✅
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+🧪 Testing Coverage
+Unit tests are provided for:
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+UsersController & UsersService
 
-## Resources
+TaskController & TaskService
 
-Check out a few resources that may come in handy when working with NestJS:
+GeneralController & GeneralService
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+AppController
 
-## Support
+AuthGuard
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+⚙️ Tech Stack
+NestJS – Backend framework
 
-## Stay in touch
+Sequelize – ORM for PostgreSQL
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+PostgreSQL (via NeonDB) – Cloud-hosted database
 
-## License
+JWT – Authentication mechanism
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Bcrypt – Password encryption
+
+Guards – Access control (Auth & Role-based)
+
+🧾 Getting Started
+Clone the Repository
+
+bash
+Copy
+Edit
+git clone <repo-url>
+Install Dependencies
+
+bash
+Copy
+Edit
+npm install
+Start the Server
+
+bash
+Copy
+Edit
+npm run start
+Base API URL
+
+arduino
+Copy
+Edit
+http://localhost:3000/
+📂 Example API Routes
+Method	Endpoint	Access Level	Description
+POST	/users/signup	Public	Register a user and receive JWT
+POST	/task/create	Commander Only	Create a new task
+GET	/task/my-missions/:userId	Authenticated	View missions for a specific user
+PATCH	/task/:id	Commander Only	Edit a specific task
+DELETE	/task/:id	Commander Only	Delete a specific task
+
+📁 Folder Structure Snapshots
+users module structure:
+Complete project structure:
+🔮 Future Improvements
+Add login route (token-based login)
+
+Build a Frontend interface
+
+Implement integration tests
+
+Add analytics and reporting tools
+
+Docker support for containerized deployment
+
+👨‍💻 Author
+This project was developed for educational and backend practice purposes by Inon Guetta, using NestJS and PostgreSQL.
