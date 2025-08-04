@@ -1,30 +1,36 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
-import { UpdateTaskDto } from './dto/update-task.dto';
 import { Task } from './entities/task.entity';
+import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()
 export class TaskService {
+  constructor(
+    @InjectModel(Task)
+    private readonly taskModel: typeof Task,
+  ) { }
 
-   create(createTaskDto: CreateTaskDto) {
-    const task = new Task()
-    task.content = createTaskDto.content
-    return task.save();
+  create(createTaskDto: CreateTaskDto) {
+    return this.taskModel.create({ ...createTaskDto });
   }
 
-   findAllTask() {
-    return Task.findAll(); 
+  findAllTask() {
+    return this.taskModel.findAll();
   }
 
-   findOneTask(id: number) {
-    return Task.findOne({ where: { id } });
+  findOneTask(id: number) {
+    return this.taskModel.findByPk(id);
   }
 
-   update(id: number, updateTaskDto: UpdateTaskDto) {
-    return Task.update(updateTaskDto, { where: { id } });
+  findAllByUserId(userId: number) {
+    return this.taskModel.findAll({ where: { userId } });
   }
 
-   remove(id: number) {
-    return Task.destroy({ where: { id } });
+  update(id: number, updateTaskDto: Partial<CreateTaskDto>) {
+    return this.taskModel.update(updateTaskDto, { where: { id } });
+  }
+
+  remove(id: number) {
+    return this.taskModel.destroy({ where: { id } });
   }
 }

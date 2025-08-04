@@ -1,3 +1,6 @@
 export class CreateTaskDto {
-    content: string
+  readonly content: string;
+  readonly startTime: string;
+  readonly endTime: string;
+  readonly userId: number;
 }

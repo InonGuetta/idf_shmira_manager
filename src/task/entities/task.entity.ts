@@ -2,7 +2,7 @@ import { Table, Column, Model, DataType } from 'sequelize-typescript';
 
 @Table({ tableName: 'tasks' })
 export class Task extends Model {
-  
+
   @Column({
     type: DataType.INTEGER,
     primaryKey: true,
@@ -11,5 +11,8 @@ export class Task extends Model {
   declare id: number;
 
   @Column
-  declare content: string; 
+  declare content: string;
+
+  @Column
+  userId: number;
 }

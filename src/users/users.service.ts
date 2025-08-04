@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import * as bcrypt from 'bcrypt';
 import { Users } from './entities/users.entity';
 import { JwtService } from '@nestjs/jwt';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -20,5 +21,18 @@ export class UsersService {
         return token;
     }
 
-    
+    async create(createUserDto: CreateUserDto) {
+        const hash = await bcrypt.hash(createUserDto.password, 10);
+        const user = await this.userModel.create({
+            ...createUserDto,
+            password: hash
+        });
+        const { password, ...userWithoutPassword } = user.get({ plain: true });
+        return userWithoutPassword;
+    }
+
+    async findAllUsers(){
+        return await this.userModel.findAll()
+    }
+
 }
